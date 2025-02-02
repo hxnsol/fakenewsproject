@@ -8,7 +8,7 @@ from flask import Flask, send_from_directory
 app = Flask(__name__)
 
 # Load the trained model
-MODEL_PATH = "C:/Users/Nico/Desktop/thesisproj/model.pkl"
+MODEL_PATH = "model.pkl"
 
 if os.path.exists(MODEL_PATH):
     model = joblib.load(MODEL_PATH)
