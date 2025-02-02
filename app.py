@@ -19,7 +19,7 @@ else:
 # Serve images from a custom folder
 @app.route('/images/<filename>')
 def get_image(filename):
-    return send_from_directory("C:/Users/Nico/Desktop/thesisproj/Model deployment using Flask/images", filename)
+    return send_from_directory("images", filename)
 
 # Home page
 @app.route("/")
