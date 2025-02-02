@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    <title>Contact Us</title>
+    <style>
+      .contact-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .contact-info {
+        flex: 1;
+        padding: 20px;
+      }
+      .contact-info h1 {
+        color: #03A678;
+        font-weight: bold;
+      }
+      .contact-info p {
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+      .contact-info a {
+        color: #03A678;
+        text-decoration: none;
+      }
+      .contact-info .member {
+        margin-bottom: 20px;
+      }
+      .contact-info .member h3 {
+        margin-bottom: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #03A678;
+      }
+      .contact-image {
+        flex: 1;
+        text-align: center;
+      }
+      .contact-image img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-200">
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <span class="ml-3 text-xl">FAKE NEWS DETECTION</span>
+          </a>
+          <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            <a href="{{ url_for('home') }}" class="mr-5 hover:text-gray-900">Prediction</a>
+            <a href="{{ url_for('metrics') }}" class="mr-5 hover:text-gray-900">Performance Metrics</a>
+            <a href="{{ url_for('faqs') }}" class="mr-5 hover:text-gray-900">FAQs</a>
+            <a href="{{ url_for('contact') }}" class="mr-5 hover:text-gray-900">Contact Us</a>            
+          </nav>
+        </div>
+      </header>
+      <hr>
+      <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto contact-container">
+          <div class="contact-info">
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-[#03A678]">Contact Us</h1>
+            <p>We’re here to help and answer any questions you might have. We look forward to hearing from you!</p>
+
+            <div class="member">
+              <h3>C.J. Balagot</h3>
+              <p><strong>Phone:</strong> <a href="tel:+4571997701">+45 71 99 77 01</a></p>
+              <p><strong>Email:</strong> <a href="mailto:member1@seleknotte.com">member1@seleknotte.com</a></p>
+            </div>
+
+            <div class="member">
+              <h3>R. Bagtasos</h3>
+              <p><strong>Phone:</strong> <a href="tel:+4571997702">+45 71 99 77 02</a></p>
+              <p><strong>Email:</strong> <a href="mailto:member2@seleknotte.com">member2@seleknotte.com</a></p>
+            </div>
+
+            <div class="member">
+              <h3>S.J. Cecilia</h3>
+              <p><strong>Phone:</strong> <a href="tel:+4571997703">+45 71 99 77 03</a></p>
+              <p><strong>Email:</strong> <a href="mailto:member3@seleknotte.com">member3@seleknotte.com</a></p>
+            </div>
+
+            <div class="member">
+              <h3>J.R. Timpug</h3>
+              <p><strong>Phone:</strong> <a href="tel:+4571997704">+45 71 99 77 04</a></p>
+              <p><strong>Email:</strong> <a href="mailto:member4@seleknotte.com">member4@seleknotte.com</a></p>
+            </div>
+          </div>
+          <div class="contact-image">
+            <img src="/images/informaticsicon.png" alt="ROC Curve">
+          </div>
+        </div>
+      </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
