@@ -66,17 +66,20 @@
           <div class="metrics-container">
             <div class="metrics-item">
               <h2 class="text-xl font-medium mb-2">Confusion Matrix</h2>
-              <p class="mb-4">The Confusion Matrix provides a detailed breakdown of the model’s predictions by showing the number of correctly and incorrectly classified instances for both fake and real news. It consists of four components: True Negatives (TN), where fake news is correctly identified as fake; False Positives (FP), where fake news is incorrectly classified as real; False Negatives (FN), where real news is mistakenly classified as fake; and True Positives (TP), where real news is correctly identified. The matrix is visualized using a heatmap to help understand how well the model distinguishes between the two classes.</p>
+              <p class="mb-4">The confusion matrix provides an analysis of the classification model's performance, detailing the distribution of predictions for the two classes, "Fake" and "Real." The model successfully classified 17,544 instances of "Fake" and 17,361 instances of "Real," demonstrating its ability to make accurate predictions for both classes. However, it also made some misclassifications, labeling 1,356 "Fake" samples as "Real" and 1,690 "Real" samples as "Fake." This evaluation highlights the model's strengths and weaknesses, offering insights into its precision, recall, and overall effectiveness in distinguishing between the two classes.
+</p>
               <img src="images/ConfusionMatrix.png" alt="Confusion Matrix">
             </div>
             <div class="metrics-item">
               <h2 class="text-xl font-medium mb-2">Performance Table</h2>
-              <p class="mb-4">The Performance Metrics such as Precision, Recall, F1-score, and Accuracy are computed to assess the model’s effectiveness. Precision measures how many of the predicted real news articles were actually real, ensuring that the model does not misclassify too many fake articles as real. Recall indicates how many actual real news articles were correctly identified, showing the model’s sensitivity to detecting real news. F1-score, which balances precision and recall, provides a more comprehensive assessment of the model's performance. Lastly, accuracy, which calculates the overall correctness of the model, is also reported. The results are formatted into a structured table for easy interpretation.</p>
+              <p class="mb-4">The performance metrics table summarizes the classification model's effectiveness using key evaluation metrics: precision, recall, and F1-score. For the "Fake" class (label 0), the model achieved a precision of 0.91, a recall of 0.93, and an F1-score of 0.92. For the "Real" class (label 1), the precision was 0.93, the recall was 0.91, and the F1-score was 0.92. The overall accuracy of the model stands at 0.92, while the weighted average precision, recall, and F1-score also equal 0.92, reflecting balanced and consistent performance across both classes.
+</p>
               <img src="images/PerformanceMetrics.png" alt="Performance Table">
             </div>
             <div class="metrics-item">
               <h2 class="text-xl font-medium mb-2">ROC Curve</h2>
-              <p class="mb-4">To further evaluate the model’s ability to distinguish between real and fake news, the ROC (Receiver Operating Characteristic) Curve is plotted. The ROC curve graphically represents the trade-off between True Positive Rate (TPR) and False Positive Rate (FPR) at various classification thresholds. The Area Under the Curve (AUC) is also computed to quantify the model’s ability to separate real and fake news, with a higher AUC indicating a better-performing model. The visualization of the ROC curve helps assess how well the model generalizes across different classification thresholds.
+              <p class="mb-4">The Receiver Operating Characteristic (ROC) curve illustrates the performance of the classification model in distinguishing between the two classes. The curve plots the true positive rate (sensitivity) against the false positive rate, showing the trade-offs between these metrics. The area under the ROC curve (AUC) is 0.97, indicating that the model has excellent discriminatory power. The closer the curve is to the top-left corner, the better the model performs. The high AUC value reflects the model's ability to correctly classify samples with minimal false positives and negatives.
+
 
 Together, these evaluation techniques provide a comprehensive analysis of the model’s strengths and weaknesses in detecting fake news, ensuring a reliable assessment of its predictive capabilities.</p>
               <img src="images/ROCCurve.png" alt="ROC Curve">
