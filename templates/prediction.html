@@ -48,7 +48,64 @@
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Fake news detection using Natural Language Processing (NLP) is an advanced technique that leverages machine learning algorithms and text analysis methods to automatically identify and classify news articles as real or fake. Given the widespread dissemination of misinformation across digital platforms, an automated fake news detection system is crucial in mitigating the impact of false narratives.</p>
           </div>
           <br>
-          <p style="font-weight:500; text-align: center;" class="prediction-text {% if prediction_text == 'Real News' %}real{% else %}fake{% endif %}"><b>{{prediction_text}}</b></p>
+          
+    <div class="text-center mt-4">
+        <h2>Analysis Result</h2>
+        <p>{{ highlighted_text|safe }}</p>
+        <p><strong>Analysis Timestamp:</strong> {{ analysis_timestamp }}</p>
+        <h3>Overall Verdict: <span class="{% if prediction_text == 'Real News' %}real{% else %}fake{% endif %}">{{ prediction_text }}</span></h3>
+    </div>
+
+    <div class="chart-container" style="width: 50%; margin: auto; text-align: center;">
+        <h3>Fake vs. Real Confidence Score</h3>
+        <canvas id="scoreChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('scoreChart').getContext('2d');
+        var scoreChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Fake News', 'Real News'],
+                datasets: [{
+                    label: 'Confidence Score (%)',
+                    data: [{{ fake_score }}, {{ real_score }}],
+                    backgroundColor: ['red', 'green']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+    </script>
+
+    <div class="text-center mt-4">
+        <button onclick="downloadReport()" class="btn btn-primary">Download Report</button>
+    </div>
+
+    <script>
+        function downloadReport() {
+            var reportContent = `
+                Analysis Result:\n
+                Verdict: {{ prediction_text }}\n
+                Timestamp: {{ analysis_timestamp }}\n
+                Fake Score: {{ fake_score }}%\n
+                Real Score: {{ real_score }}%\n
+                Highlighted Text:\n
+                {{ highlighted_text }}
+            `;
+            var blob = new Blob([reportContent], { type: "text/plain;charset=utf-8" });
+            var link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "fake_news_report.txt";
+            link.click();
+        }
+    </script>
+    
           <div class="form-container">
             <form action="/predict" method="POST">
                 <div class="mb-3">
@@ -63,3 +120,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
+
