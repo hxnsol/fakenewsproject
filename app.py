@@ -44,7 +44,6 @@ def contact():
 # Handle form submission & API requests
 
 from urllib.parse import urlparse
-from datetime import datetime
 import numpy as np
 
 def extract_source(news_url):
@@ -68,7 +67,10 @@ def analyze_text(input_text):
         else:  # Real News
             highlighted_text += f' <span class="real">{word}</span>'
 
-    analysis_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # Convert timestamp to Philippine Time (PHT)
+    ph_tz = timezone('Asia/Manila')
+    analysis_timestamp = datetime.now(ph_tz).strftime("%Y-%m-%d %H:%M:%S PHT")
+    
     return highlighted_text.strip(), analysis_timestamp, "Fake News" if prediction == 0 else "Real News", fake_score, real_score
 
 @app.route("/predict", methods=["POST"])
