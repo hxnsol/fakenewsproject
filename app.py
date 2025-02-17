@@ -3,6 +3,8 @@ import joblib
 import os
 from waitress import serve
 from flask import Flask, send_from_directory
+from urllib.parse import urlparse
+from datetime import datetime
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -41,58 +43,28 @@ def faqs():
 def contact():
     return render_template("contact.html")
 
-# Handle form submission & API requests
-@app.route("/predict", methods=["POST"])
-def predict():
-    if request.content_type == "application/json":
-        data = request.json
-        news_text = data.get("news", "")
-    else:
-        news_text = request.form.get("news", "")
-
-    if not news_text:
-        return jsonify({"error": "No text provided"}), 400
-
-    # Predict using the model
-    prediction = model.predict([news_text])[0]  # Use .predict() method
-    result = "Real News" if prediction == 1 else "Fake News"
-
-    # Return result for API or HTML form
-    if request.content_type == "application/json":
-        return jsonify({"prediction": result})
-    else:
-        return render_template("prediction.html", prediction_text=f"{result}")
-
-if __name__ == "__main__":
-    print("Server running at: http://127.0.0.1:8080/")
-    serve(app, host="0.0.0.0", port=8080)
-
-
-
-# Additional functions for URL extraction, text highlighting, and timestamping
-from urllib.parse import urlparse
-from datetime import datetime
-
+# Function to extract the news source from the URL
 def extract_source(news_url):
     parsed_url = urlparse(news_url)
     return parsed_url.netloc
 
+# Function to analyze the text and highlight fake (red) or real (green) text
 def analyze_text(input_text):
     prediction = model.predict([input_text])[0]
-
+    
     words = input_text.split()
     highlighted_text = ""
-
+    
     for word in words:
         if prediction == 0:  # Fake News
             highlighted_text += f' <span class="fake">{word}</span>'
         else:  # Real News
             highlighted_text += f' <span class="real">{word}</span>'
-
+    
     analysis_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return highlighted_text.strip(), analysis_timestamp, "Fake News" if prediction == 0 else "Real News"
 
-# Updated predict route to include news URL and highlighted text
+# Handle form submission & API requests (Updated to include news URL)
 @app.route("/predict", methods=["POST"])
 def predict():
     if request.content_type == "application/json":
@@ -118,4 +90,8 @@ def predict():
                                news_source=news_source,
                                news_url=news_url,
                                prediction_text=prediction_text)
+
+if __name__ == "__main__":
+    print("Server running at: http://127.0.0.1:8080/")
+    serve(app, host="0.0.0.0", port=8080)
 
