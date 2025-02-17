@@ -49,16 +49,18 @@
           </div>
           <br>
           
-    <div class="text-center mt-4">
-        <h2>Analysis Result</h2>
-        <p>{{ highlighted_text|safe }}</p>
-        <p><strong>Analysis Timestamp:</strong> {{ analysis_timestamp }}</p>
-        <h3>Overall Verdict: <span class="{% if prediction_text == 'Real News' %}real{% else %}fake{% endif %}">{{ prediction_text }}</span></h3>
-    </div>
+    <div class="analysis-container" style="display: flex; align-items: center; justify-content: space-between;">
+        <div class="text-container" style="width: 60%; padding-right: 20px;">
+            <h2><strong>Analysis Result</strong></h2>
+            <p>{{ highlighted_text|safe }}</p>
+            <p><strong>Analysis Timestamp:</strong> {{ analysis_timestamp }}</p>
+            <h3><strong>Overall Verdict:</strong> <span class="{% if prediction_text == 'Real News' %}real{% else %}fake{% endif %}">{{ prediction_text }}</span></h3>
+        </div>
 
-    <div class="chart-container" style="width: 50%; margin: auto; text-align: center;">
-        <h3>Fake vs. Real Confidence Score</h3>
-        <canvas id="scoreChart"></canvas>
+        <div class="chart-container" style="width: 40%;">
+            <h3><strong>Fake vs. Real Confidence Score</strong></h3>
+            <canvas id="scoreChart"></canvas>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -82,29 +84,6 @@
             }
         });
     </script>
-
-    <div class="text-center mt-4">
-        <button onclick="downloadReport()" class="btn btn-primary">Download Report</button>
-    </div>
-
-    <script>
-        function downloadReport() {
-            var reportContent = `
-                Analysis Result:\n
-                Verdict: {{ prediction_text }}\n
-                Timestamp: {{ analysis_timestamp }}\n
-                Fake Score: {{ fake_score }}%\n
-                Real Score: {{ real_score }}%\n
-                Highlighted Text:\n
-                {{ highlighted_text }}
-            `;
-            var blob = new Blob([reportContent], { type: "text/plain;charset=utf-8" });
-            var link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "fake_news_report.txt";
-            link.click();
-        }
-    </script>
     
           <div class="form-container">
             <form action="/predict" method="POST">
@@ -120,4 +99,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
+
 
