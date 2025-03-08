@@ -44,7 +44,7 @@
           <br>
           <div class="analysis-container" style="display: flex; align-items: center; justify-content: space-between;">
             <div class="text-container" style="width: 60%; padding-right: 20px;">
-                <h2><strong>Analysis Result</strong></h2>
+                <h2><strong>Analysis Result:</strong></h2>
                 <p>{{ highlighted_text|safe }}</p>
                 <p><strong>Analysis Timestamp:</strong> {{ analysis_timestamp }}</p>
                 <h3><strong>Overall Verdict:</strong> <span class="{% if prediction_text == 'Real News' %}real{% else %}fake{% endif %}">{{ prediction_text }}</span></h3>
@@ -81,7 +81,7 @@
                   <textarea class="form-control" id="news" name="news" placeholder="Enter News Context (Do Not Enter a URL Link)"></textarea>
                   <div id="inputError" class="form-text text-danger"></div>
                 </div>
-                <button style="height: 45px; width: 110px; background: #10b962;" type="submit" class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Verify News</button>
+                <button style="height: 45px; width: 110px; background: #10b962;" type="submit" class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Verify</button>
             </form>
         </div>
       </section>
