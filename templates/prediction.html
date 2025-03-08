@@ -1,9 +1,38 @@
-          <nav style="position: relative; bottom: 13px; left:100px;" class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <a href="{{ url_for('home') }}" class="mr-5 hover:text-gray-900">Prediction</a>
-            <a href="{{ url_for('metrics') }}" class="mr-5 hover:text-gray-900">Performance Metrics</a>
-            <a href="{{ url_for('faqs') }}" class="mr-5 hover:text-gray-900">FAQs</a>
-            <a href="{{ url_for('contact') }}" class="mr-5 hover:text-gray-900">Contact Us</a>            
-          </nav>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="static/icons8-facebook-ios-16-filled-32.png" rel="icon">
+    <link href="static/icons8-facebook-ios-16-filled-96.png" rel="icons8-facebook-ios-16-filled-96.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title>Fake News Detection</title>
+    <style>
+      .prediction-text.real { color: green; font-weight: bold; }
+      .prediction-text.fake { color: red; font-weight: bold; }
+      .center-container { display: flex; justify-content: center; align-items: center; height: 50vh; flex-direction: column; }
+      .form-container { width: 50%; text-align: center; margin: auto; }
+      .form-control { height: 120px; font-size: 18px; }
+      .highlight-real { background-color: lightgreen; }
+      .highlight-fake { background-color: lightcoral; }
+    </style>
+  </head>
+  <body class="bg-gray-200">
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <span class="ml-3 text-xl">FAKE NEWS DETECTION</span>
+          </a>
+        <nav style="position: relative; bottom: 13px; left:100px;" class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+          <a href="{{ url_for('home') }}" class="mr-5 hover:text-gray-900">Verify News</a>
+          <a href="{{ url_for('metrics') }}" class="mr-5 hover:text-gray-900">Performance Metrics</a>
+          <a href="{{ url_for('faqs') }}" class="mr-5 hover:text-gray-900">FAQs</a>
+          <a href="{{ url_for('contact') }}" class="mr-5 hover:text-gray-900">Contact Us</a>            
+        </nav>
         </div>
       </header>
       <hr>
@@ -17,7 +46,7 @@
           <br>
           <div class="analysis-container" style="display: flex; align-items: center; justify-content: space-between;">
             <div class="text-container" style="width: 60%; padding-right: 20px;">
-                <h2><strong>Analysis Result</strong></h2>
+                <h2><strong>Analysis Result:</strong></h2>
                 <p><strong>Highlighted Analysis:</strong> <span id='highlightedText'>{{ highlighted_text|safe }}</span></p>
                 <p><strong>Analysis Timestamp:</strong> {{ analysis_timestamp }}</p>
                 <h3><strong>Overall Verdict:</strong> <span class="{% if prediction_text == 'Real News' %}real{% else %}fake{% endif %}">{{ prediction_text }}</span></h3>
@@ -48,34 +77,6 @@
                 }
             });
         </script>
-        <div class="form-container">
-            <form id="newsForm" action="/predict" method="POST">
-                <div class="mb-3">
-                  <textarea class="form-control" id="news" name="news" placeholder="Enter News Context (Do Not Enter a URL Link)"></textarea>
-                  <div id="inputError" class="form-text text-danger"></div>
-                </div>
-                <button style="height: 45px; width: 110px; background: #10b962;" type="submit" class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Predict</button>
-            </form>
-        </div>
       </section>
-      <script>
-        document.getElementById("newsForm").addEventListener("submit", function(event) {
-            let newsInput = document.getElementById("news").value.trim();
-            let inputError = document.getElementById("inputError");
-            let wordCount = newsInput.split(/\s+/).length;
-            let urlPattern = /(https?:\/\/[^\s]+)/g;
-            
-            if (urlPattern.test(newsInput)) {
-                inputError.innerText = "News Context not URL";
-                event.preventDefault();
-                return;
-            }
-            if (wordCount < 200) {
-                inputError.innerText = "Please provide more information (at least 200 words)";
-                event.preventDefault();
-                return;
-            }
-        });
-      </script>
   </body>
 </html>
