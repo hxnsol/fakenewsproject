@@ -1,25 +1,19 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Favicons -->
     <link href="static/icons8-facebook-ios-16-filled-32.png" rel="icon">
     <link href="static/icons8-facebook-ios-16-filled-96.png" rel="icons8-facebook-ios-16-filled-96.png">
-
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-
     <title>Fake News Detection</title>
     <style>
       .prediction-text.real { color: green; font-weight: bold; }
       .prediction-text.fake { color: red; font-weight: bold; }
       .center-container { display: flex; justify-content: center; align-items: center; height: 50vh; flex-direction: column; }
       .form-container { width: 50%; text-align: center; margin: auto; }
-      .form-control { height: 60px; font-size: 18px; }
+      .form-control { height: 120px; font-size: 18px; }
     </style>
   </head>
   <body class="bg-gray-200">
@@ -31,12 +25,12 @@
             </svg>
             <span class="ml-3 text-xl">FAKE NEWS DETECTION</span>
           </a>
-          <nav style="position: relative; bottom: 13px; left:100px;" class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <a href="{{ url_for('home') }}" class="mr-5 hover:text-gray-900">Prediction</a>
-            <a href="{{ url_for('metrics') }}" class="mr-5 hover:text-gray-900">Performance Metrics</a>
-            <a href="{{ url_for('faqs') }}" class="mr-5 hover:text-gray-900">FAQs</a>
-            <a href="{{ url_for('contact') }}" class="mr-5 hover:text-gray-900">Contact Us</a>            
-          </nav>
+        <nav style="position: relative; bottom: 13px; left:100px;" class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+          <a href="{{ url_for('home') }}" class="mr-5 hover:text-gray-900">Prediction</a>
+          <a href="{{ url_for('metrics') }}" class="mr-5 hover:text-gray-900">Performance Metrics</a>
+          <a href="{{ url_for('faqs') }}" class="mr-5 hover:text-gray-900">FAQs</a>
+          <a href="{{ url_for('contact') }}" class="mr-5 hover:text-gray-900">Contact Us</a>            
+        </nav>
         </div>
       </header>
       <hr>
@@ -48,56 +42,67 @@
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Fake News detection using Natural Language Processing (NLP) is an advanced technique that leverages machine learning algorithms and text analysis methods to automatically identify and classify news articles as real or fake. Given the widespread dissemination of misinformation across digital platforms, an automated fake news detection system is crucial in mitigating the impact of false narratives.</p>
           </div>
           <br>
-          
-    <div class="analysis-container" style="display: flex; align-items: center; justify-content: space-between;">
-        <div class="text-container" style="width: 60%; padding-right: 20px;">
-            <h2><strong>Analysis Result</strong></h2>
-            <p>{{ highlighted_text|safe }}</p>
-            <p><strong>Analysis Timestamp:</strong> {{ analysis_timestamp }}</p>
-            <h3><strong>Overall Verdict:</strong> <span class="{% if prediction_text == 'Real News' %}real{% else %}fake{% endif %}">{{ prediction_text }}</span></h3>
+          <div class="analysis-container" style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="text-container" style="width: 60%; padding-right: 20px;">
+                <h2><strong>Analysis Result</strong></h2>
+                <p>{{ highlighted_text|safe }}</p>
+                <p><strong>Analysis Timestamp:</strong> {{ analysis_timestamp }}</p>
+                <h3><strong>Overall Verdict:</strong> <span class="{% if prediction_text == 'Real News' %}real{% else %}fake{% endif %}">{{ prediction_text }}</span></h3>
+            </div>
+            <div class="chart-container" style="width: 40%;">
+                <h3><strong>Fake vs. Real Confidence Score</strong></h3>
+                <canvas id="scoreChart"></canvas>
+            </div>
         </div>
-
-        <div class="chart-container" style="width: 40%;">
-            <h3><strong>Fake vs. Real Confidence Score</strong></h3>
-            <canvas id="scoreChart"></canvas>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        var ctx = document.getElementById('scoreChart').getContext('2d');
-        var scoreChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Fake News', 'Real News'],
-                datasets: [{
-                    label: 'Confidence Score (%)',
-                    data: [{{ fake_score }}, {{ real_score }}],
-                    backgroundColor: ['red', 'green']
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true, max: 100 }
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            var ctx = document.getElementById('scoreChart').getContext('2d');
+            var scoreChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Fake News', 'Real News'],
+                    datasets: [{
+                        label: 'Confidence Score (%)',
+                        data: [{{ fake_score }}, {{ real_score }}],
+                        backgroundColor: ['red', 'green']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, max: 100 }
+                    }
                 }
-            }
-        });
-    </script>
-    
-          <div class="form-container">
-            <form action="/predict" method="POST">
+            });
+        </script>
+        <div class="form-container">
+            <form id="newsForm" action="/predict" method="POST">
                 <div class="mb-3">
-                  <input type="text" class="form-control" id="news" name="news" placeholder="Enter News Context (Do Not Enter a URL Link)" style="height: 60px; font-size: 18px;" placeholder="Enter News Context (Do Not Enter a URL Link)">
-                  <div id="emailHelp" class="form-text">AUTHENTICITY OF NEWS IS VERIFIED HERE.</div>
+                  <textarea class="form-control" id="news" name="news" placeholder="Enter News Context (Do Not Enter a URL Link)"></textarea>
+                  <div id="inputError" class="form-text text-danger"></div>
                 </div>
-                <button style="height: 45px; width: 110px; background: #10b962;"  type="submit" class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Predict</button>
+                <button style="height: 45px; width: 110px; background: #10b962;" type="submit" class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Predict</button>
             </form>
-          </div>
         </div>
       </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+        document.getElementById("newsForm").addEventListener("submit", function(event) {
+            let newsInput = document.getElementById("news").value.trim();
+            let inputError = document.getElementById("inputError");
+            let wordCount = newsInput.split(/\s+/).length;
+            let urlPattern = /(https?:\/\/[^\s]+)/g;
+            
+            if (urlPattern.test(newsInput)) {
+                inputError.innerText = "News Context not URL";
+                event.preventDefault();
+                return;
+            }
+            if (wordCount < 200) {
+                inputError.innerText = "Please provide more information (at least 200 words)";
+                event.preventDefault();
+                return;
+            }
+        });
+      </script>
   </body>
 </html>
-
-
