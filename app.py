@@ -18,7 +18,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # Load the trained model
-MODEL_PATH = "C:/Users/Nico/Desktop/thesis-system/model.pkl"
+MODEL_PATH = "model.pkl"
 
 if os.path.exists(MODEL_PATH):
     model = joblib.load(MODEL_PATH)
