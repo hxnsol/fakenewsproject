@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    <title>Frequently Asked Questions</title>
+    <style>
+      .faq-container {
+        max-width: 800px;
+        margin: 40px auto; /* Lowered FAQ container margin */
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .faq-header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .faq-item {
+        border-bottom: 1px solid #e5e7eb;
+        padding: 10px 0;
+      }
+      .faq-item:last-child {
+        border-bottom: none;
+      }
+      .faq-question {
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        font-weight: bold;
+        color: #353935; /* Changed question color to green */
+      }
+      .faq-answer {
+        display: none;
+        margin-top: 10px;
+        font-size: 14px;
+      }
+      .view-more {
+        text-align: center;
+        margin-top: 20px;
+      }
+      nav {
+        margin-right: 30px; /* Adjusted spacing for nav links */
+      }
+    </style>
+  </head>
+  <body class="bg-gray-200">
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <span class="ml-3 text-xl">FAKE NEWS DETECTION</span>
+          </a>
+          <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            <a href="{{ url_for('home') }}" class="mr-5 hover:text-gray-900">Prediction</a>
+            <a href="{{ url_for('metrics') }}" class="mr-5 hover:text-gray-900">Performance Metrics</a>
+            <a href="{{ url_for('faqs') }}" class="mr-5 hover:text-gray-900">FAQs</a>
+            <a href="{{ url_for('contact') }}" class="mr-5 hover:text-gray-900">Contact Us</a>
+          <a href="{{ url_for('history') }}" class="mr-5 hover:text-gray-900">History</a>            
+          </nav>
+        </div>
+      </header>
+      <hr>
+      <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto faq-container">
+          <div class="faq-header">
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-[#03A678]">Frequently Asked Questions</h1>
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Find answers to the most commonly asked questions below.</p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">What is the purpose of this system? <span>+</span></div>
+            <div class="faq-answer">The system is designed to enhance automated fake news detection using advanced NLP Techniques.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">How does the Fake News Detection system works?<span>+</span></div>
+            <div class="faq-answer">The system utilizes NLP and machine learning models to analyze and classify news articles as either "FAKE" or "REAL".</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">What technologies are used in this project? <span>+</span></div>
+            <div class="faq-answer">The project incorporates machine learning classifiers, NLP Techniques and Logistic Regression as the main algorithm.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">Can the system handle multiple languages? <span>+</span></div>
+            <div class="faq-answer">Currently, the system primarily focuses on English text, but future improvements may incorporate multilingual support.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">What datasets were used for training the model? <span>+</span></div>
+            <div class="faq-answer">The system uses open-source datasets from Kaggle and other publicly available sources to train the fake news detection models.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">What accuracy does the system achieve?? <span>+</span></div>
+            <div class="faq-answer">The system's Logistic Regression model achieves approximately 92% accuracy in detecting fake news.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">How does the system ensure fairness in detection? <span>+</span></div>
+            <div class="faq-answer">By sourcing high-quality and unbiased datasets and integrating transparency modules to explain detection decisions.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">How can educators and students benefit from the system? <span>+</span></div>
+            <div class="faq-answer">Educators can use the system as a teaching resource for AI and NLP concepts, while students can use it as a tool to analyze and verify news content.</div>
+          </div>
+        </div>
+      </section>
+    <script>
+      document.querySelectorAll('.faq-question').forEach(item => {
+        item.addEventListener('click', () => {
+          const answer = item.nextElementSibling;
+          const isVisible = answer.style.display === 'block';
+          answer.style.display = isVisible ? 'none' : 'block';
+          item.querySelector('span').textContent = isVisible ? '+' : '-';
+        });
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

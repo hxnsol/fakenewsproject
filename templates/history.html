@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prediction History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      th, td {
+        padding: 12px;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 14px;
+      }
+      th {
+        background-color: #f3f4f6;
+        text-align: left;
+      }
+      tr:hover {
+        background-color: #f9fafb;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-200">
+    <header class="text-gray-600 body-font">
+      <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
+          <span class="ml-3 text-xl">FAKE NEWS DETECTION</span>
+        </a>
+        <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+          <a href="{{ url_for('home') }}" class="mr-5 hover:text-gray-900">Verify News</a>
+          <a href="{{ url_for('metrics') }}" class="mr-5 hover:text-gray-900">Performance Metrics</a>
+          <a href="{{ url_for('faqs') }}" class="mr-5 hover:text-gray-900">FAQs</a>
+          <a href="{{ url_for('contact') }}" class="mr-5 hover:text-gray-900">Contact Us</a>
+          <a href="{{ url_for('history') }}" class="mr-5 font-bold text-green-600">History</a>
+        </nav>
+      </div>
+    </header>
+    <hr>
+    <section class="text-gray-600 body-font">
+      <div class="container px-5 py-24 mx-auto bg-white shadow rounded-lg">
+        <h2 class="text-2xl font-bold text-center mb-6 text-[#03A678]">Prediction History</h2>
+        {% if records %}
+        <div class="overflow-auto">
+          <table class="table-auto w-full text-left bg-white">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Verdict</th>
+                <th>Fake Score</th>
+                <th>Real Score</th>
+                <th>Source</th>
+                <th>Author</th>
+                <th>Publish Date</th>
+                <th>URL</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in records %}
+              <tr>
+                <td>{{ row['Timestamp'] }}</td>
+                <td>{{ row['Verdict'] }}</td>
+                <td>{{ row['Fake Score'] }}%</td>
+                <td>{{ row['Real Score'] }}%</td>
+                <td>{{ row['Source'] }}</td>
+                <td>{{ row['Author'] }}</td>
+                <td>{{ row['Publish Date'] }}</td>
+                <td><a href="{{ row['URL'] }}" class="text-blue-600 underline" target="_blank">View</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="text-center text-gray-600">No prediction history available.</p>
+        {% endif %}
+      </div>
+    </section>
+  </body>
+</html>

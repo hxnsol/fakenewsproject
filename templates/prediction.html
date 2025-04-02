@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="static/icons8-facebook-ios-16-filled-32.png" rel="icon">
+    <link href="static/icons8-facebook-ios-16-filled-96.png" rel="icons8-facebook-ios-16-filled-96.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title>Fake News Detection</title>
+    <style>
+      .prediction-text.real { color: green; font-weight: bold; }
+      .prediction-text.fake { color: red; font-weight: bold; }
+      .center-container { display: flex; justify-content: center; align-items: center; height: 50vh; flex-direction: column; }
+      .form-container { width: 50%; text-align: center; margin: auto; }
+      .form-control { height: 120px; font-size: 18px; }
+      .neutral { color: gray; font-weight: bold; }
+</style>
+  </head>
+  <body class="bg-gray-200">
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <span class="ml-3 text-xl">FAKE NEWS DETECTION</span>
+          </a>
+        <nav style="position: relative; bottom: 13px; left:100px;" class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+          <a href="{{ url_for('home') }}" class="mr-5 hover:text-gray-900">Verify News</a>
+          <a href="{{ url_for('metrics') }}" class="mr-5 hover:text-gray-900">Performance Metrics</a>
+          <a href="{{ url_for('faqs') }}" class="mr-5 hover:text-gray-900">FAQs</a>
+          <a href="{{ url_for('contact') }}" class="mr-5 hover:text-gray-900">Contact Us</a>
+          <a href="{{ url_for('history') }}" class="mr-5 hover:text-gray-900">History</a>            
+        </nav>
+        </div>
+      </header>
+      <hr>
+      <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto">
+          <div class="flex flex-col text-center w-full mb-20">
+            <h2 style="font-size:small;" class="text-xs text-green-500 tracking-widest font-medium title-font mb-1">THESIS PROJECT</h2>
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Fake News Detection</h1>
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Fake News detection using Natural Language Processing (NLP) is an advanced technique that leverages machine learning algorithms and text analysis methods to automatically identify and classify news articles as real or fake. Given the widespread dissemination of misinformation across digital platforms, an automated fake news detection system is crucial in mitigating the impact of false narratives.</p>
+          </div>
+          <br>
+          
+<div class="article-container" style="margin-bottom: 30px;">
+    <h2><strong>Article Headline:</strong></h2>
+    <p>{{ headline }}</p>
+{% if article_image %}
+<div style="margin-top: 20px;">
+    <img src="{{ article_image }}" alt="Article Image" style="width:100%; border-radius: 5px;">
+</div>
+{% endif %}
+
+
+    <h2 style="margin-top: 20px;"><strong>Full Article Text:</strong></h2>
+    <div style="background-color: #f8f8f8; padding: 15px; border-radius: 5px;">
+        <p>{{ full_text }}</p>
+    </div>
+</div>
+
+<div class="analysis-container" style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="text-container" style="width: 60%; padding-right: 20px;">
+                <h2><strong>Analysis Result:</strong></h2>
+                <p>{{ highlighted_text|safe }}</p>
+<table class="table-auto text-sm mt-4 border border-gray-400 w-full text-left">
+  <thead>
+    <tr class="bg-gray-100">
+      <th colspan="2" class="px-4 py-2 text-gray-700 font-semibold border-b border-gray-400">Article Metadata</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="px-4 py-2 font-medium border-b border-gray-300">Analysis Timestamp:</td><td class="px-4 py-2 border-b border-gray-300">{{ analysis_timestamp }}</td></tr>
+    <tr><td class="px-4 py-2 font-medium border-b border-gray-300">Article Author(s):</td><td class="px-4 py-2 border-b border-gray-300">{{ author }}</td></tr>
+    <tr><td class="px-4 py-2 font-medium border-b border-gray-300">Publish Date:</td><td class="px-4 py-2 border-b border-gray-300">{{ publish_date }}</td></tr>
+    <tr><td class="px-4 py-2 font-medium border-b border-gray-300">Source URL:</td><td class="px-4 py-2 border-b border-gray-300"><a href="{{ news_url }}" target="_blank">{{ news_url }}</a></td></tr>
+    <tr><td class="px-4 py-2 font-medium">Source Name:</td><td class="px-4 py-2">{{ news_source }}</td></tr>
+  </tbody>
+</table>
+<table class="table-auto text-sm mt-6 border border-gray-400 w-full text-left">
+  <thead>
+    <tr class="bg-gray-100">
+      <th colspan="2" class="px-4 py-2 text-gray-700 font-semibold border-b border-gray-400">Prediction Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="px-4 py-2 font-medium border-b border-gray-300">Overall Verdict:</td><td class="px-4 py-2 border-b border-gray-300"><span class="{% if prediction_text == 'Real News' %}real{% else %}fake{% endif %}">{{ prediction_text }}</span></td></tr>
+    <tr><td class="px-4 py-2 font-medium border-b border-gray-300">Fake News Confidence:</td><td class="px-4 py-2 border-b border-gray-300">{{ fake_score }}%</td></tr>
+    <tr><td class="px-4 py-2 font-medium">Real News Confidence:</td><td class="px-4 py-2">{{ real_score }}%</td></tr>
+  </tbody>
+</table>
+
+
+                
+
+                
+            </div>
+            <div class="chart-container" style="width: 40%;">
+                <h3><strong>Fake vs. Real Confidence Score</strong></h3>
+                <canvas id="scoreChart"></canvas>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+<script>
+    var ctx = document.getElementById('scoreChart').getContext('2d');
+    var fake = {{ fake_score }};
+    var real = {{ real_score }};
+    var label = "{{ prediction_text }}";
+    var barColors;
+
+    if (label === "Neutral") {
+        barColors = ["gray", "gray"];
+    } else {
+        barColors = ["red", "green"];
+    }
+
+    var scoreChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Fake News', 'Real News'],
+            datasets: [{
+                label: 'Confidence Score (%)',
+                data: [fake, real],
+                backgroundColor: barColors
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true, max: 100 }
+            }
+        }
+    });
+</script>
+
+        <div class="form-container">
+            <form id="newsForm" action="/predict" method="POST">
+                <div class="mb-3">
+                  <textarea class="form-control" id="news" name="news" placeholder="Enter News Link"></textarea>
+                  <div id="inputError" class="form-text text-danger"></div>
+                </div>
+                <button style="height: 45px; width: 110px; background: #10b962;" type="submit" class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Verify</button>
+            </form>
+        </div>
+        
+<br>
+
+      </section>
+      <script>
+        document.getElementById("newsForm").addEventListener("submit", function(event) {
+            let newsInput = document.getElementById("news").value.trim();
+            let inputError = document.getElementById("inputError");
+            let wordCount = newsInput.split(/\s+/).length;
+            let urlPattern = /(https?:\/\/[^\s]+)/g;
+            
+            if (!urlPattern.test(newsInput)) {
+                inputError.innerText = "Please enter a valid URL";
+                // event.preventDefault();
+                return;
+            }
+            // if (wordCount < 100) {
+                // inputError.innerText = "Please provide more information (at least 100 words)";
+                // event.preventDefault();
+                return;
+            }
+        });
+      </script>
+  </body>
+</html>
