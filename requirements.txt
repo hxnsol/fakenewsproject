@@ -12,3 +12,4 @@ requests
 pytz
 nltk
 pytesseract
+lxml[html_clean]
