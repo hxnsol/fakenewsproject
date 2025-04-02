@@ -5,3 +5,10 @@ waitress
 scikit-learn
 numpy
 pandas
+newspaper3k
+validators
+beautifulsoup4
+requests
+pytz
+nltk
+pytesseract
